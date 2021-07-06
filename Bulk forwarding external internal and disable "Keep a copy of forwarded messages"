@@ -1,0 +1,10 @@
+Save a CSV file via Excel or NotePad with the following headings: Mailbox and ForwardTo.
+List the UserMailboxes in your organisation you wish to set to forward externally under Mailbox.
+List the external email addresses under ForwardTo
+Your CSV file should look like below:
+
+
+Open PowerShell as an admin and run the following cmdlets;
+Connect-Exchange Online
+$users = Import-Csv D:\list.csv
+$users | ForEach($_) {Set-Mailbox $_.Mailbox -ForwardingSmtpAddress $_.ForwardTo -Delivertomailboxandforward $false}
