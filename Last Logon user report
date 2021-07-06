@@ -1,0 +1,6 @@
+Download the file .ps1
+Run this script from PowerShell, type:
+	& .\lastlogonstats.ps1 
+You can find the report if you go to File Explorer and put C:\Windows\System32 -> look for file with filename "LastLogonStats_2020.... .csv"
+Report will look like:
+Alias, PrimarySMTPAddress,UserPrincipalNAme,WhenMailboxCreated,LastLogonTime,Type(usermailbox or sharedmailbox)
