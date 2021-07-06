@@ -1,3 +1,5 @@
+set-executionpolicy remotesigned -scope CurrentUser
+connect-exchangeonline
 Connect-MsolService
 import-csv "c:\Users\imangala\Desktop\new_users.csv" | foreach { New-Msoluser -userPrincipalName $_.UserPrincipalName -displayname $_.displayname -firstname $_.firstname -lastname $_.lastname -password $_.Password}
 import-csv "c:\Users\imangala\Desktop\new_users.csv" | foreach { Set-Msoluser -userPrincipalName $_.UserPrincipalName -displayname $_.displayname -firstname $_.firstname -lastname $_.lastname -password $_.Password -ForceChangePassword $False}
