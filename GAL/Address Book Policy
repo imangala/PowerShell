@@ -1,0 +1,20 @@
+1.Add a role to a role assignment policy
+https://technet.microsoft.com/en-us/library/jj657511(v=exchg.150).aspx
+2.Connect to Exchange Online using remote PowerShell
+https://technet.microsoft.com/en-us/library/jj984289(v=exchg.150).aspx
+3.Create the resource list
+New-AddressList -name "test-resource" -RecipientFilter {(((RecipientDisplayType -eq 'ConferenceRoomMailbox') -or (RecipientDisplayType -eq 'SyncedConferenceRoomMailbox')) -and (CustomAttribute3 -eq "nullresource"))} -DisplayName "test Room List"
+4.Create the address list
+New-AddressList -name "test" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (CustomAttribute2 -eq "test")} –DisplayName “test Address List”
+5.Create Global Address List
+New-GlobalAddressList -name "GAL-test " -RecipientFilter {(CustomAttribute2 -eq "test")}
+6.Create Offline Address Book
+New-OfflineAddressBook -name "OAB-test " -AddressLists "GAL_test"
+7.Create Address Book Policy
+New-AddressBookPolicy -name "ABP-test" -AddressLists "test" -OfflineAddressBook "\OAB-test " -GlobalAddressList "\GAL-test" -RoomList "\ test-resource "
+8.Assign the Address Book Policy to users
+Get-Mailbox -resultsize unlimited -identity "Charles@tumengs.onmicrosoft.com" | Set-Mailbox -AddressBookPolicy "ABP-test"
+9.Hide test from address lists
+Get-Mailbox -resultsize unlimited | where {$_.CustomAttribute2 -eq "test"} | Set-Mailbox -HiddenFromAddressListsEnabled $true
+After doing these steps, login to the portal->People. As the user has been assigned this address book policy, he is unable to see other users who don’t have “test” attribute.
+You can create other attributes for users who have the same domain.
