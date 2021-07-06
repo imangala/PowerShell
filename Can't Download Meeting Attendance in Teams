@@ -1,0 +1,8 @@
+Install-Module MicrosoftTeams
+Import-Module MicrosoftTeams
+$userCredential = Get-Credential
+$sfbSession = New-CsOnlineSession -Credential $userCredential
+Import-PSSession $sfbSession
+Set-CSTeamsMeetingPolicy – Identity Global – AllowEngagementReport “Enabled”
+To ensure that functionality is enabled, run following command: Get-CsTeamsMeetingPolicy -Identity Global
+Please run Teams app -> start your meeting -> and in the participants list, you will have new option, to download participants report in CSV format.
